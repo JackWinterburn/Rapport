@@ -1,0 +1,157 @@
+/* Checkbox ------------------------------------------------------------- */
+.ui-check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  font-size: var(--text-md);
+  user-select: none;
+}
+.ui-check input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.ui-check__box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--color-text-tertiary);
+  border-radius: var(--radius-xs);
+  background: var(--color-bg);
+  color: transparent;
+  transition: background var(--duration-fast), border-color var(--duration-fast), color var(--duration-fast);
+}
+.ui-check__box svg {
+  width: 12px;
+  height: 12px;
+}
+.ui-check--round .ui-check__box {
+  border-radius: var(--radius-full);
+  width: 20px;
+  height: 20px;
+}
+/* Todoist: hovering an unchecked round box previews the tick */
+.ui-check--round:hover input:not(:checked) + .ui-check__box {
+  color: var(--color-text-tertiary);
+}
+.ui-check--accent input:checked + .ui-check__box {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+.ui-check--neutral input:checked + .ui-check__box {
+  background: var(--color-text);
+  border-color: var(--color-text);
+  color: var(--color-bg);
+}
+.ui-check input:focus-visible + .ui-check__box {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+.ui-check input:disabled + .ui-check__box {
+  opacity: 0.5;
+}
+
+/* Switch --------------------------------------------------------------- */
+.ui-switch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  cursor: pointer;
+}
+.ui-switch--disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.ui-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.ui-switch__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ui-switch__label {
+  font-size: var(--text-md);
+}
+.ui-switch__desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+.ui-switch__track {
+  position: relative;
+  flex-shrink: 0;
+  width: 30px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-active);
+  box-shadow: inset 0 0 0 1px var(--color-border);
+  transition: background var(--duration);
+}
+.ui-switch__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--duration) var(--ease-out);
+}
+.ui-switch input:checked ~ .ui-switch__track {
+  background: var(--color-link);
+}
+.ui-switch input:checked ~ .ui-switch__track .ui-switch__thumb {
+  transform: translateX(12px);
+}
+.ui-switch input:focus-visible ~ .ui-switch__track {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Segmented control ---------------------------------------------------- */
+.ui-segmented {
+  display: inline-flex;
+  padding: 2px;
+  gap: 2px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-inset);
+}
+.ui-segmented__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+.ui-segmented--sm .ui-segmented__item {
+  height: 24px;
+  padding: 0 var(--space-2);
+  font-size: var(--text-xs);
+}
+.ui-segmented__item svg {
+  width: 14px;
+  height: 14px;
+}
+.ui-segmented__item[aria-checked="true"] {
+  background: var(--color-bg);
+  color: var(--color-text);
+  box-shadow: var(--shadow-sm), 0 0 0 1px var(--color-border);
+}

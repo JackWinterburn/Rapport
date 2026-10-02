@@ -1,0 +1,19 @@
+{
+  "name": "rapport",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @rapport/server & npm run dev -w @rapport/web",
+    "build": "npm run build -w @rapport/web",
+    "start": "npm run start -w @rapport/server",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}

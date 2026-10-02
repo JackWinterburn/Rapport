@@ -1,0 +1,35 @@
+.ui-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  color: #fff;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.01em;
+  user-select: none;
+}
+.ui-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ui-avatar--xs { font-size: 9px; }
+.ui-avatar--sm { font-size: 11px; }
+.ui-avatar--md { font-size: 13px; }
+.ui-avatar--lg { font-size: 20px; }
+.ui-avatar--xl { font-size: 34px; }
+.ui-avatar--more {
+  background: var(--color-bg-active);
+  color: var(--color-text-secondary);
+}
+.ui-avatar-stack {
+  display: inline-flex;
+}
+.ui-avatar-stack > .ui-avatar {
+  box-shadow: 0 0 0 2px var(--color-bg);
+}
+.ui-avatar-stack > .ui-avatar + .ui-avatar {
+  margin-left: -6px;
+}

@@ -1,0 +1,111 @@
+.ui-spinner {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: currentColor;
+}
+.ui-spinner svg {
+  width: 100%;
+  height: 100%;
+  animation: ui-spin 0.7s linear infinite;
+}
+@keyframes ui-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ui-skeleton {
+  display: inline-block;
+  border-radius: var(--radius-xs);
+  background: linear-gradient(90deg, var(--color-bg-inset) 0%, var(--color-bg-hover) 50%, var(--color-bg-inset) 100%);
+  background-size: 200% 100%;
+  animation: ui-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes ui-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* Toasts (Todoist-style dark snackbar, bottom-left on desktop, above tab bar on mobile) */
+.ui-toasts {
+  position: fixed;
+  z-index: var(--z-toast);
+  left: 50%;
+  bottom: calc(var(--tabbar-height) + var(--space-4) + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: min(420px, calc(100vw - 32px));
+  pointer-events: none;
+}
+@media (min-width: 900px) {
+  .ui-toasts {
+    left: var(--space-6);
+    bottom: var(--space-6);
+    transform: none;
+  }
+}
+.ui-toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #2b2b2b;
+  color: #fff;
+  font-size: var(--text-md);
+  box-shadow: var(--shadow-modal);
+  pointer-events: auto;
+  animation: ui-toast-in var(--duration-slow) var(--ease-out);
+}
+.ui-toast__icon {
+  display: inline-flex;
+}
+.ui-toast__icon svg {
+  width: 16px;
+  height: 16px;
+}
+.ui-toast--success .ui-toast__icon { color: #6fcf8e; }
+.ui-toast--error .ui-toast__icon { color: #ff8a7e; }
+.ui-toast__message {
+  flex: 1;
+}
+.ui-toast__action {
+  padding: 6px 10px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: #ff9d93;
+  font-weight: var(--weight-semibold);
+}
+.ui-toast__action:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.ui-toast__close {
+  display: inline-flex;
+  padding: 6px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: rgba(255, 255, 255, 0.6);
+}
+.ui-toast__close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+.ui-toast__close svg {
+  width: 14px;
+  height: 14px;
+}
+@keyframes ui-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}

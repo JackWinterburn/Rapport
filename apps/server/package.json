@@ -1,0 +1,26 @@
+{
+  "name": "@rapport/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --disable-warning=ExperimentalWarning --env-file-if-exists=../../.env src/index.ts",
+    "start": "NODE_ENV=production tsx --disable-warning=ExperimentalWarning --env-file-if-exists=../../.env src/index.ts",
+    "test": "vitest run",
+    "typecheck": "tsc -p ."
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "@types/web-push": "^3.6.4",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.3",
+    "hono": "^4.13.12",
+    "tsx": "^4.23.15",
+    "web-push": "^3.6.7",
+    "zod": "^4.6.5",
+    "@rapport/core": "*"
+  }
+}

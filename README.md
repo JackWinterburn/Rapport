@@ -8,6 +8,7 @@ Each contact holds their birthday, interests, habits, gift ideas and notes, plus
 
 ## Contents
 
+- [Running the app](#running-the-app)
 - [Overview](#overview)
 - [Target user and design principles](#target-user-and-design-principles)
 - [MVP scope](#mvp-scope)
@@ -18,6 +19,70 @@ Each contact holds their birthday, interests, habits, gift ideas and notes, plus
 - [Rough data model](#rough-data-model)
 - [Privacy, ethics and risks](#privacy-ethics-and-risks)
 - [Open questions and next steps](#open-questions-and-next-steps)
+
+## Running the app
+
+The MVP is built: a React + TypeScript PWA, a small Node API with Google sign-in, and AI conversation capture via Gemini Flash-Lite.
+
+```
+packages/core   UI-free domain logic shared by server, web and a future React Native app:
+                models + validation (zod), date maths, search, AI-suggestion guards, CSV export, API client
+apps/server     Hono API on Node 22 + SQLite (node:sqlite): Google OAuth, REST endpoints,
+                Gemini capture, web-push reminders, data export/delete. Serves the built PWA in production.
+apps/web        React 19 PWA (Vite, React Router, TanStack Query), design system in src/ui,
+                service worker for offline reading and push notifications
+docs/           design-system.md
+```
+
+### Local development
+
+Requires Node 22.13+.
+
+```bash
+npm install
+cp .env.example .env          # DEV_LOGIN=true lets you sign in without Google
+npm run dev                   # API on :8787, app on http://localhost:5173
+```
+
+Add `GEMINI_API_KEY` to `.env` to turn on AI suggestions; without it you can still log conversations to the timeline.
+
+```bash
+npm run typecheck && npm test   # core + server tests (validation, dates, AI guards, OAuth, API, reminders)
+npm run build                   # production build of the PWA
+```
+
+### Configuration
+
+| Variable | Purpose |
+| --- | --- |
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Google OAuth client (type "Web application"). Authorised redirect URI: `$APP_URL/auth/google/callback`. Required in production. |
+| `ALLOWED_EMAILS` | Comma-separated emails allowed to sign in. Required in production. |
+| `APP_URL` | Public origin, e.g. `https://rapport.example.com` |
+| `GEMINI_API_KEY`, `GEMINI_MODEL` | AI capture. Defaults to `gemini-3.1-flash-lite`; any Flash-Lite model ID works. |
+| `AI_MONTHLY_TOKEN_LIMIT` | Hard monthly cap on tokens per user (default 2,000,000) |
+| `VAPID_*` | Web push keys (optional; generated and stored on first run if unset) |
+| `DATABASE_PATH`, `TZ`, `PORT` | Storage, reminder time zone (reminders go out from 9am), port |
+
+See [`.env.example`](.env.example) for the full list.
+
+### Deploying
+
+One container serves both the API and the PWA:
+
+```bash
+docker build -t rapport .
+docker run -p 8787:8787 -v rapport-data:/data --env-file .env -e NODE_ENV=production rapport
+```
+
+Put it behind HTTPS (service workers, push and secure cookies require it). The SQLite database lives in `/data`; back up that volume, or use Settings → Export regularly.
+
+### Decisions taken for the MVP
+
+- **Storage:** hosted backend with SQLite, not local-first. Google sign-in needs a server, the server can send reminders when the app is closed, and data survives a lost phone. Offline reading comes from the service worker caching API responses.
+- **Auth:** Google OAuth 2.0 (authorisation code + PKCE), restricted to `ALLOWED_EMAILS`. Sessions are httpOnly cookies; only a hash of the session id is stored. Every query is scoped to the signed-in user.
+- **AI:** Gemini Flash-Lite with structured JSON output, called only from the server. Only the conversation text, the contact's name and their non-private details are sent: never contact details, photos or private notes. Suggestions are then checked in code before they're shown: each must quote what you wrote (`evidence`), sensitive topics are dropped, and duplicates of existing facts are dropped. Nothing is saved until you accept it.
+- **Voice input:** browser dictation (Web Speech API) where available, plus the phone keyboard's microphone everywhere.
+- **Design:** Notion-style surfaces with Todoist-style lists. See [docs/design-system.md](docs/design-system.md) or `/design-system` in the app.
 
 ## Overview
 
@@ -232,19 +297,19 @@ The biggest open decision is where data lives, because it affects reminders, syn
 
 **Open questions**
 
-- [ ] Local-first (IndexedDB) or a hosted backend with a database for the MVP?
-- [ ] Which AI model and provider for conversation capture, and what is the monthly cost limit?
+- [x] Local-first (IndexedDB) or a hosted backend with a database for the MVP? **Hosted backend (SQLite), with offline reading via the service worker.**
+- [x] Which AI model and provider for conversation capture, and what is the monthly cost limit? **Gemini Flash-Lite; limit set by `AI_MONTHLY_TOKEN_LIMIT`.**
 - [ ] Should the app have a proper name, and a visual identity (colours, avatar style)?
 - [ ] Which facts should be treated as private by default?
-- [ ] Should conversation capture accept voice input in the MVP, or only typed text?
+- [x] Should conversation capture accept voice input in the MVP, or only typed text? **Typed text plus browser dictation where supported.**
 
 **Suggested next steps**
 
-- [ ] Confirm the data storage decision
+- [x] Confirm the data storage decision
 - [ ] Sketch wireframes for the five core screens: contact list, contact profile, add or edit contact, conversation capture review, upcoming dates
 - [ ] Write the conversation-capture prompt and test it on a handful of real conversation descriptions before building any UI
-- [ ] Set up the repository (React, TypeScript, PWA shell) with a UI-free core module for models and logic
-- [ ] Build the contact profile and list, then key dates, then conversation capture
+- [x] Set up the repository (React, TypeScript, PWA shell) with a UI-free core module for models and logic
+- [x] Build the contact profile and list, then key dates, then conversation capture
 - [ ] Use it for a few weeks and review against the success measure in the MVP scope
 
 The MVP work is tracked as [GitHub issues](../../issues), grouped into milestone epics.

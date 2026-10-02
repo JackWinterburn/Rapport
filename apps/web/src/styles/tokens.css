@@ -1,0 +1,248 @@
+/*
+ * Rapport design tokens.
+ *
+ * Design language: Notion's calm, warm-neutral document surfaces (page titles,
+ * property rows, soft tag colours, hover-revealed controls) combined with
+ * Todoist's crisp list rows, red accent, round checkboxes and coloured
+ * relative dates. See docs/design-system.md.
+ *
+ * Every colour is a token. Components never use raw hex values.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* --- Neutrals (warm, Notion-like) --- */
+  --color-bg: #ffffff;
+  --color-bg-subtle: #fbfbfa;
+  --color-bg-sidebar: #f7f7f5;
+  --color-bg-inset: #f1f1ef;
+  --color-bg-hover: rgba(55, 53, 47, 0.06);
+  --color-bg-active: rgba(55, 53, 47, 0.1);
+  --color-bg-overlay: rgba(15, 15, 15, 0.4);
+  --color-bg-elevated: #ffffff;
+
+  --color-text: #37352f;
+  --color-text-secondary: #73726e;
+  --color-text-tertiary: #9b9a97;
+  --color-text-inverse: #ffffff;
+  --color-text-placeholder: #a5a4a1;
+
+  --color-border: rgba(55, 53, 47, 0.09);
+  --color-border-strong: rgba(55, 53, 47, 0.16);
+  --color-border-input: rgba(55, 53, 47, 0.2);
+
+  /* --- Accent (Todoist-like red) --- */
+  --color-accent: #dc4c3e;
+  --color-accent-hover: #c3392c;
+  --color-accent-text: #c3392c;
+  --color-accent-soft: #fcebe9;
+  --color-on-accent: #ffffff;
+
+  /* --- Interaction --- */
+  --color-link: #2383e2;
+  --color-focus-ring: rgba(35, 131, 226, 0.45);
+  --color-selection: rgba(35, 131, 226, 0.18);
+
+  /* --- Status --- */
+  --color-success: #058527;
+  --color-success-soft: #e6f4ea;
+  --color-warning: #ad6200;
+  --color-warning-soft: #fdf1e1;
+  --color-danger: #d1453b;
+  --color-danger-soft: #fde8e7;
+  --color-info: #2383e2;
+  --color-info-soft: #e7f1fb;
+
+  /* --- Relative dates (Todoist convention) --- */
+  --color-date-today: #058527;
+  --color-date-tomorrow: #ad6200;
+  --color-date-week: #692fc2;
+  --color-date-later: #73726e;
+  --color-date-overdue: #d1453b;
+
+  /* --- Tag palette (Notion): soft background + dark text, plus a solid tone for dots/avatars --- */
+  --tag-gray-bg: #e3e2e0;     --tag-gray-fg: #32302c;     --tag-gray-solid: #787774;
+  --tag-brown-bg: #eee0da;    --tag-brown-fg: #442a1e;    --tag-brown-solid: #9f6b53;
+  --tag-orange-bg: #fadec9;   --tag-orange-fg: #49290e;   --tag-orange-solid: #d9730d;
+  --tag-yellow-bg: #fdecc8;   --tag-yellow-fg: #402c1b;   --tag-yellow-solid: #cb912f;
+  --tag-green-bg: #dbeddb;    --tag-green-fg: #1c3829;    --tag-green-solid: #448361;
+  --tag-blue-bg: #d3e5ef;     --tag-blue-fg: #183347;     --tag-blue-solid: #337ea9;
+  --tag-purple-bg: #e8deee;   --tag-purple-fg: #412454;   --tag-purple-solid: #9065b0;
+  --tag-pink-bg: #f5e0e9;     --tag-pink-fg: #4c2337;     --tag-pink-solid: #c14c8a;
+  --tag-red-bg: #ffe2dd;      --tag-red-fg: #5d1715;      --tag-red-solid: #d44c47;
+
+  /* --- Typography --- */
+  --font-sans: "Inter Variable", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --text-xs: 0.75rem;    /* 12 – captions, badges */
+  --text-sm: 0.8125rem;  /* 13 – secondary text, metadata (Todoist) */
+  --text-md: 0.875rem;   /* 14 – body / UI default */
+  --text-base: 1rem;     /* 16 – inputs on mobile, reading text */
+  --text-lg: 1.125rem;   /* 18 – section headings */
+  --text-xl: 1.5rem;     /* 24 – view titles */
+  --text-2xl: 2rem;      /* 32 – page title on mobile */
+  --text-3xl: 2.5rem;    /* 40 – Notion page title */
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.5;
+
+  /* --- Spacing (4px grid) --- */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* --- Radius --- */
+  --radius-xs: 3px;   /* Notion hover blocks, tags */
+  --radius-sm: 4px;   /* buttons, inputs */
+  --radius-md: 6px;   /* cards, menus */
+  --radius-lg: 10px;  /* dialogs (Todoist) */
+  --radius-xl: 14px;  /* sheets */
+  --radius-full: 9999px;
+
+  /* --- Elevation (Notion's layered shadows) --- */
+  --shadow-sm: 0 1px 2px rgba(15, 15, 15, 0.06);
+  --shadow-card: 0 0 0 1px rgba(15, 15, 15, 0.04), 0 2px 4px rgba(15, 15, 15, 0.04);
+  --shadow-popover: 0 0 0 1px rgba(15, 15, 15, 0.05), 0 3px 6px rgba(15, 15, 15, 0.1), 0 9px 24px rgba(15, 15, 15, 0.2);
+  --shadow-modal: 0 0 0 1px rgba(15, 15, 15, 0.05), 0 5px 10px rgba(15, 15, 15, 0.1), 0 15px 40px rgba(15, 15, 15, 0.2);
+  --shadow-fab: 0 2px 6px rgba(220, 76, 62, 0.3), 0 6px 16px rgba(15, 15, 15, 0.12);
+
+  /* --- Motion --- */
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --duration-fast: 100ms;
+  --duration: 160ms;
+  --duration-slow: 260ms;
+
+  /* --- Layout --- */
+  --sidebar-width: 248px;
+  --content-width: 720px;
+  --content-width-wide: 960px;
+  --topbar-height: 48px;
+  --tabbar-height: 60px;
+  --control-height-sm: 28px;
+  --control-height: 32px;
+  --control-height-lg: 40px;
+
+  /* --- Layers --- */
+  --z-sticky: 10;
+  --z-dropdown: 50;
+  --z-fab: 60;
+  --z-modal: 90;
+  --z-toast: 100;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --color-bg: #191919;
+    --color-bg-subtle: #1e1e1e;
+    --color-bg-sidebar: #202020;
+    --color-bg-inset: #252525;
+    --color-bg-hover: rgba(255, 255, 255, 0.055);
+    --color-bg-active: rgba(255, 255, 255, 0.09);
+    --color-bg-overlay: rgba(0, 0, 0, 0.6);
+    --color-bg-elevated: #252525;
+    --color-text: #e3e3e1;
+    --color-text-secondary: #9b9b9b;
+    --color-text-tertiary: #7f7f7f;
+    --color-text-placeholder: #6f6f6f;
+    --color-border: rgba(255, 255, 255, 0.094);
+    --color-border-strong: rgba(255, 255, 255, 0.14);
+    --color-border-input: rgba(255, 255, 255, 0.18);
+    --color-accent: #e5594c;
+    --color-accent-hover: #f06c5f;
+    --color-accent-text: #ff8a7e;
+    --color-accent-soft: rgba(229, 89, 76, 0.16);
+    --color-link: #529cca;
+    --color-success: #4dab6f;
+    --color-success-soft: rgba(77, 171, 111, 0.16);
+    --color-warning: #e3a14b;
+    --color-warning-soft: rgba(227, 161, 75, 0.16);
+    --color-danger: #ff7369;
+    --color-danger-soft: rgba(255, 115, 105, 0.14);
+    --color-info: #529cca;
+    --color-info-soft: rgba(82, 156, 202, 0.16);
+    --color-date-today: #4dab6f;
+    --color-date-tomorrow: #e3a14b;
+    --color-date-week: #a87fe0;
+    --color-date-later: #9b9b9b;
+    --color-date-overdue: #ff7369;
+    --tag-gray-bg: #474747;    --tag-gray-fg: #e3e3e1;    --tag-gray-solid: #8c8c8c;
+    --tag-brown-bg: #5c3b23;   --tag-brown-fg: #f1dfd3;   --tag-brown-solid: #a27763;
+    --tag-orange-bg: #7a4317;  --tag-orange-fg: #fbe2cd;  --tag-orange-solid: #cb7b37;
+    --tag-yellow-bg: #6b5420;  --tag-yellow-fg: #fbefcf;  --tag-yellow-solid: #c19138;
+    --tag-green-bg: #2b593f;   --tag-green-fg: #d8eedd;   --tag-green-solid: #4f9768;
+    --tag-blue-bg: #28456c;    --tag-blue-fg: #d6e6f5;    --tag-blue-solid: #447acb;
+    --tag-purple-bg: #492f64;  --tag-purple-fg: #ebdcf6;  --tag-purple-solid: #865db6;
+    --tag-pink-bg: #69314c;    --tag-pink-fg: #f6dce9;    --tag-pink-solid: #ba4a78;
+    --tag-red-bg: #6e3630;     --tag-red-fg: #fbdcd8;     --tag-red-solid: #be524b;
+    --shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.06);
+    --shadow-popover: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 3px 6px rgba(0, 0, 0, 0.3), 0 9px 24px rgba(0, 0, 0, 0.5);
+    --shadow-modal: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 5px 10px rgba(0, 0, 0, 0.3), 0 15px 40px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* Explicit dark theme (Settings → Appearance). Mirrors the media query above. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #191919;
+  --color-bg-subtle: #1e1e1e;
+  --color-bg-sidebar: #202020;
+  --color-bg-inset: #252525;
+  --color-bg-hover: rgba(255, 255, 255, 0.055);
+  --color-bg-active: rgba(255, 255, 255, 0.09);
+  --color-bg-overlay: rgba(0, 0, 0, 0.6);
+  --color-bg-elevated: #252525;
+  --color-text: #e3e3e1;
+  --color-text-secondary: #9b9b9b;
+  --color-text-tertiary: #7f7f7f;
+  --color-text-placeholder: #6f6f6f;
+  --color-border: rgba(255, 255, 255, 0.094);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+  --color-border-input: rgba(255, 255, 255, 0.18);
+  --color-accent: #e5594c;
+  --color-accent-hover: #f06c5f;
+  --color-accent-text: #ff8a7e;
+  --color-accent-soft: rgba(229, 89, 76, 0.16);
+  --color-link: #529cca;
+  --color-success: #4dab6f;
+  --color-success-soft: rgba(77, 171, 111, 0.16);
+  --color-warning: #e3a14b;
+  --color-warning-soft: rgba(227, 161, 75, 0.16);
+  --color-danger: #ff7369;
+  --color-danger-soft: rgba(255, 115, 105, 0.14);
+  --color-info: #529cca;
+  --color-info-soft: rgba(82, 156, 202, 0.16);
+  --color-date-today: #4dab6f;
+  --color-date-tomorrow: #e3a14b;
+  --color-date-week: #a87fe0;
+  --color-date-later: #9b9b9b;
+  --color-date-overdue: #ff7369;
+  --tag-gray-bg: #474747;    --tag-gray-fg: #e3e3e1;    --tag-gray-solid: #8c8c8c;
+  --tag-brown-bg: #5c3b23;   --tag-brown-fg: #f1dfd3;   --tag-brown-solid: #a27763;
+  --tag-orange-bg: #7a4317;  --tag-orange-fg: #fbe2cd;  --tag-orange-solid: #cb7b37;
+  --tag-yellow-bg: #6b5420;  --tag-yellow-fg: #fbefcf;  --tag-yellow-solid: #c19138;
+  --tag-green-bg: #2b593f;   --tag-green-fg: #d8eedd;   --tag-green-solid: #4f9768;
+  --tag-blue-bg: #28456c;    --tag-blue-fg: #d6e6f5;    --tag-blue-solid: #447acb;
+  --tag-purple-bg: #492f64;  --tag-purple-fg: #ebdcf6;  --tag-purple-solid: #865db6;
+  --tag-pink-bg: #69314c;    --tag-pink-fg: #f6dce9;    --tag-pink-solid: #ba4a78;
+  --tag-red-bg: #6e3630;     --tag-red-fg: #fbdcd8;     --tag-red-solid: #be524b;
+  --shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --shadow-popover: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 3px 6px rgba(0, 0, 0, 0.3), 0 9px 24px rgba(0, 0, 0, 0.5);
+  --shadow-modal: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 5px 10px rgba(0, 0, 0, 0.3), 0 15px 40px rgba(0, 0, 0, 0.6);
+}
